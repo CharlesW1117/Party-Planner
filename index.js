@@ -1,12 +1,13 @@
 //constants//
-const BASE = "https://https://fsa-crud-2aa9294fe819.herokuapp.com/api";
-const COHORT = "2602-CHARLES"; //should use your cohort and name
+const BASE = "https://fsa-crud-2aa9294fe819.herokuapp.com/api";
+const COHORT = "/2602-CHARLES"; //should use your cohort and name
 const RESOURCE = "/events"; // the events tab from the url in const BASE
 const API = BASE + COHORT + RESOURCE; // all three put together
 
 //state
 let parties = []; //state is here to hold all my app's memory, when this changes the screen re-renders.//
-let selectedParties = null; //whichever party the user clicks. null because nothing has been select.
+let selectedParty = null;
+ //whichever party the user clicks. null because nothing has been select.
 //you can also use let selectedParies:
 
 //Calls the API; Waits for the response; Turns it into JavaScript; Stores it in state; Handles errors if something goes wrong
@@ -24,15 +25,16 @@ async function getParties() {
   }
 }
 
-function render() {
-  const app = document.getElementById("app"); // Grabs - the <div id="app"></div> from my HTML.
-  app.innerHTML = ""; // to clear the screen
-  const title = document.createElement("h1"); //creating the header of the page here//
-  title.textContent = "Party Planner";
-  app.append(title);
+async function getParty(id) {
+  try {
+    const response = await fetch(API + "/" + id);
+    const result = await response.json();
+    selectedParty = result.data;
+    render();
+  } catch (e) {
+    console.error(e);
+  }
 }
-
-render();
 
 function PartyListItem(party) {
   //This is for one clickable item
