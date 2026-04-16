@@ -15,7 +15,7 @@ async function getParties() {
   //created a function called getParties
   try {
     //tries to pull the API data define above
-    const response = await fetch(API);
+    const response = await fetch(API + "/events");
     const result = await response.json(); //once it gets a response, it converts it into Javascript
     parties = result.data; // we are calling the data that was pulled fromt he API parties
     render(); //we say render because we want the data to show when it arrives
@@ -27,7 +27,7 @@ async function getParties() {
 
 async function getParty(id) {
   try {
-    const response = await fetch(API + "/" + id);
+    const response = await fetch(API + "/events" + id);
     const result = await response.json();
     selectedParty = result.data;
     render();
